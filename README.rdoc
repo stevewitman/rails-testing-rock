@@ -7,3 +7,5 @@ atom .
 bundle
 bin/rails g rspec:install
 bundle exec spring binstub --all
+
+spec/features/home_page_spec.rb
