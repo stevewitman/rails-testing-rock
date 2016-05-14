@@ -1,0 +1,10 @@
+<%= simple_form_for @event do |f| %>
+  <%= f.input :title %>
+  <%= f.input :description %>
+  <%= f.input :privacy, collection: Hash[Event.privacies.map { |k,v| [ k.split('_').first.capitalize, k ]}] %>
+  <%= f.input :featured, label: 'Featured event' %>
+  <%= f.input :cover_image, as: :file %>
+  <%= f.submit 'Create Event', class: 'btn btn-primary' %>
+
+
+<% end %>
