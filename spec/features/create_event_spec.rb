@@ -1,5 +1,8 @@
 require 'rails_helper'
 
+# See create_course_spec & support/new_course_form
+# for visit_page, fill_in_with, submit methods
+
 feature 'create new event' do
   scenario 'create new event with valid data' do
     visit('/')

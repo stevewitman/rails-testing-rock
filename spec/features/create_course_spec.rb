@@ -1,26 +1,22 @@
 require 'rails_helper'
+require_relative '../support/new_course_form'
 
 feature 'create new course' do
-  scenario 'create new course with valid data' do
-    visit('/')
-    click_on('New Course')
+  let(:new_course_form) { NewCourseForm.new }
 
-    fill_in('Title', with: 'Rails Testing')
-    fill_in('Description', with: 'Rails testing course')
-    select('Public', from: 'Privacy')
-    check('Featured Course')
-    attach_file('Cover image', "#{Rails.root}/spec/fixtures/placeholder.png")
-    click_on('Create Course')
+  scenario 'create new course with valid data' do
+    new_course_form.visit_page.fill_in_with(
+      title: 'Rails Testing',
+      description: 'Test description',
+      privacy: 'Public'
+    ).submit
 
     expect(page).to have_content('Course has been created')
     expect(Course.last.title).to eq('Rails Testing')
   end
 
   scenario 'cannot create course with invalid data' do
-    visit('/')
-    click_on('New Course')
-
-    click_on('Create Course')
+    new_course_form.visit_page.submit
 
     expect(page).to have_content("can't be blank")
   end
