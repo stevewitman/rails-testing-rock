@@ -7,6 +7,8 @@ class CoursesController < ApplicationController
     @course = Course.new(course_params)
     if @course.save
       redirect_to root_url, notice: 'Course has been created'
+    else
+      render :new
     end
   end
 

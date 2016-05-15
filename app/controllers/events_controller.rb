@@ -7,6 +7,8 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
     if @event.save
       redirect_to root_url, notice: 'Event has been created'
+    else
+      render :new
     end
   end
 

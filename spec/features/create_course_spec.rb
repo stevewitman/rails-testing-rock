@@ -15,4 +15,13 @@ feature 'create new course' do
     expect(page).to have_content('Course has been created')
     expect(Course.last.title).to eq('Rails Testing')
   end
+
+  scenario 'cannot create course with invalid data' do
+    visit('/')
+    click_on('New Course')
+
+    click_on('Create Course')
+
+    expect(page).to have_content("can't be blank")
+  end
 end

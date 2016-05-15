@@ -15,4 +15,13 @@ feature 'create new event' do
     expect(page).to have_content('Event has been created')
     expect(Event.last.title).to eq('Meetup')
   end
+
+  scenario 'cannot create event with invalid data' do
+    visit('/')
+    click_on('New Event')
+
+    click_on('Create Event')
+
+    expect(page).to have_content("can't be blank")
+  end
 end
