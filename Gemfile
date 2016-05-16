@@ -13,6 +13,7 @@ gem 'puma'
 gem 'bootstrap-sass'
 gem 'simple_form'
 gem 'redcarpet'
+gem 'devise'
 
 group :test do
   gem 'capybara'
