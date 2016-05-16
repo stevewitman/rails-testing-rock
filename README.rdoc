@@ -19,3 +19,18 @@ gem 'simple_form'
 bundle
 
 rails g simple_form:install --bootstrap
+
+installing cucumber...
+group :test do
+  gem 'cucumber-rails', require: false
+  gem 'database_cleaner'
+end
+group :development, :test do
+  gem 'spring-commands-cucumber'
+end
+bundle
+bundle exec spring binstub --all
+bin/rails g cucumber:install
+bin/cucumber
+!!! uninitialized constant FactoryGirl (NameError)
+!!! MOVED gem 'factory_girl_rails' to group :development, :test

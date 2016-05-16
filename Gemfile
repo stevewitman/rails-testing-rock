@@ -16,10 +16,14 @@ gem 'redcarpet'
 
 group :test do
   gem 'capybara'
+  gem 'cucumber-rails', require: false
+  gem 'database_cleaner'
 end
 
 group :development, :test do
   gem 'byebug'
+  gem 'spring-commands-cucumber'
+  gem 'factory_girl_rails'
 end
 
 group :development do
@@ -27,5 +31,4 @@ group :development do
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'rspec-rails'
-  gem 'factory_girl_rails'
 end
