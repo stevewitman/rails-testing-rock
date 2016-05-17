@@ -2,19 +2,73 @@ require 'rails_helper'
 
 describe AchievementsController do
 
-  describe "GET index" do
-    it "renders index template" do
-      get :index
-      expect(response).to render_template(:index)
+  describe "guest user" do
+    
+    describe "GET index" do
+      it "renders index template" do
+        get :index
+        expect(response).to render_template(:index)
+      end
+
+      it "assigns only the public achievements to template" do
+        public_achievement = FactoryGirl.create(:public_achievement)
+        private_achievement = FactoryGirl.create(:private_achievement)
+        get :index
+        expect(assigns(:achievements)).to match_array([public_achievement])
+      end
     end
 
-    it "assigns only the public achievements to template" do
-      public_achievement = FactoryGirl.create(:public_achievement)
-      private_achievement = FactoryGirl.create(:private_achievement)
-      get :index
-      expect(assigns(:achievements)).to match_array([public_achievement])
+    describe "GET show" do
+      let(:achievement) { FactoryGirl.create(:public_achievement)}
+      it "renders :show template" do
+        get :show, id: achievement
+        expect(response).to render_template(:show)
+      end
+
+      it "assigns requested achievement to @achievement" do
+        get :show, id: achievement
+        expect(assigns(:achievement)).to eq(achievement)
+      end
     end
+
+    describe "GET new" do
+      it "redirects to login page" do
+        get :new
+        expect(response).to redirect_to(new_user_session_url)
+      end
+    end
+
+    describe "POST create" do
+      it "redirects to login page" do
+        post :create, achievement: FactoryGirl.attributes_for(:public_achievement)
+        expect(response).to redirect_to(new_user_session_url)
+      end
+    end
+
+    describe "GET edit" do
+      it "redirects to login page" do
+        get :edit, id: FactoryGirl.create(:public_achievement)
+        expect(response).to redirect_to(new_user_session_url)
+      end
+    end
+
+    describe "PUT update" do
+      it "redirects to login page" do
+        put :update, id: FactoryGirl.create(:public_achievement), achievement: FactoryGirl.attributes_for(:public_achievement)
+        expect(response).to redirect_to(new_user_session_url)
+      end
+    end
+
+    describe "DELETE destroy" do
+      it "redirects to login page" do
+        delete :destroy, id: FactoryGirl.create(:public_achievement)
+        expect(response).to redirect_to(new_user_session_url)
+      end
+    end
+
   end
+
+
 
   describe "GET edit" do
     let(:achievement) { FactoryGirl.create(:public_achievement) }
@@ -74,18 +128,7 @@ describe AchievementsController do
     end
   end
 
-  describe "GET show" do
-    let(:achievement) { FactoryGirl.create(:public_achievement)}
-    it "renders :show template" do
-      get :show, id: achievement
-      expect(response).to render_template(:show)
-    end
 
-    it "assigns requested achievement to @achievement" do
-      get :show, id: achievement
-      expect(assigns(:achievement)).to eq(achievement)
-    end
-  end
 
   describe "POST create" do
     context "valid data" do
@@ -127,7 +170,7 @@ describe AchievementsController do
 
     it "deletes achievements from database" do
       delete :destroy, id: achievement
-      expect(Achievement.exists?(achievement.id)).to be_falsy 
+      expect(Achievement.exists?(achievement.id)).to be_falsy
     end
   end
 
