@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160516132313) do
+ActiveRecord::Schema.define(version: 20160517053147) do
 
   create_table "achievements", force: :cascade do |t|
     t.string   "title"
@@ -21,7 +21,10 @@ ActiveRecord::Schema.define(version: 20160516132313) do
     t.string   "cover_image"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "user_id"
   end
+
+  add_index "achievements", ["user_id"], name: "index_achievements_on_user_id"
 
   create_table "courses", force: :cascade do |t|
     t.string   "title"
